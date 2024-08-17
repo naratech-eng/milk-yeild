@@ -1,10 +1,14 @@
-import { z } from "zod";
+import { z } from "zod"
+// import mongoose from 'mongoose'
 
 export const formSchema = z.object({
-    _id: z.string().uuid(),
-    "Begin Time": z.string().min(1, {
-      message: "Begin Time is required.",
-    }),
+    _id: z.string().regex(/^[0-9a-f]{24}$/).optional(),
+    // "Begin Date": z.string().min(1, {
+    //   message: "Begin Date is required.",
+    // }),
+    // "Begin Time": z.string().min(1, {
+    //   message: "Begin Time is required.",
+    // }),
     "Milking Number": z.number().min(1, {
       message: "Milking Number must be at least 1.",
     }),
@@ -16,7 +20,7 @@ export const formSchema = z.object({
     }),
     "OCC(*1000 cells/ml)": z.number().min(0, {
       message: "OCC must be at least 0.",
-    }),
+    }).optional(),
     "Milking Interval (hh:mm)": z.string().min(1, {
       message: "Milking Interval is required.",
     }),

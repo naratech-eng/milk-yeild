@@ -178,3 +178,24 @@ const MilkingListing = ({ milkingData }: MilkingListingProps) => {
 };
 
 export default MilkingListing;
+
+
+{milkingData.map((milking) => (
+                  <Dialog key={milking._id}>
+                    <DialogTrigger asChild>
+                      <Button onClick={() => handleEdit(milking)} variant="outline">
+                        Edit
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]" aria-describedby="milking-data-description">
+                      <DialogHeader>
+                        <DialogTitle>Edit Milking Data</DialogTitle>
+                        <DialogDescription>Please edit the necessary fields to update</DialogDescription>
+                      </DialogHeader>
+                      {/* <MilkingForm />  */}
+                      <DialogFooter>
+                        <Button type="submit" >Save changes</Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                ))} 

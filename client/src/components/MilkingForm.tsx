@@ -1,61 +1,89 @@
+import React, { useEffect, useRef } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { formSchema } from './utils/FormSchema';
+import { z } from 'zod';
+import { useMilking } from '@/context/MilkingContext';
 
-import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 
-import { useForm } from 'react-hook-form';
+type MilkingData = z.infer<typeof formSchema>;
 
-interface MilkingData {
-    "Begin Time": string;
-    "Milking Number": string;
-    "Duration (mm:ss)": string;
-    "Yield (kg)": string;
-    "OCC (*1000 cells/ml)": string;
-    "Milking Interval (hh:mm)": string;
-    LF: string;
-    RF: string;
-    LR: string;
-    RR: string;
-    Udder: string;
-    "Milk Destination": string;
-  }
+interface MilkingFormProps {
+  selectedMilking?: MilkingData;
+  // onSubmit: SubmitHandler<MilkingData>;
+  onFormSubmit: () => void;
   
-  interface MilkingFormProps {
-    selectedMilking?: MilkingData;
-    onSubmit: (data: MilkingData) => void;
-  }
+}
 
-const MilkingForm = ({ selectedMilking, onSubmit }: MilkingFormProps) => {
-  const form = useForm({
-    defaultValues: selectedMilking || {
-      "Begin Time": '',
-      "Milking Number": '',
-      "Duration (mm:ss)": '',
-      "Yield (kg)": '',
-      "OCC (*1000 cells/ml)": '',
-      "Milking Interval (hh:mm)": '',
-      LF: '',
-      RF: '',
-      LR: '',
-      RR: '',
-      Udder: '',
-      "Milk Destination": '',
-    },
+const MilkingForm: React.FC<MilkingFormProps> = ({ selectedMilking, onFormSubmit}) => {
+  const{addMilking, updateMilking} = useMilking()
+
+  // const previousSelectedMilking = useRef<MilkingData | undefined>(undefined);
+
+  const form = useForm<MilkingData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: selectedMilking || {},
   });
+  // console.log("Form data:", form.getValues())
+  // console.log("Form errors:", form.formState.errors)
+  
+  // useEffect(()=>{
+  //   if(selectedMilking !== previousSelectedMilking.current){
+  //     form.reset(selectedMilking)
+  //     previousSelectedMilking.current = selectedMilking
+  //   }
+  //   console.log("useffect worked: ", selectedMilking)
+    
+  // }, [selectedMilking])
+  useEffect(() => {
+    if (selectedMilking && !form.formState.isSubmitting) {
+      form.reset(selectedMilking);
+      console.log("useEffect worked: ", selectedMilking);
+    }
+  }, [selectedMilking]);
+  
+  
+  
+  // console.log("receiving from edit form(outside onsubmit): ",selectedMilking)
 
-  console.table(onSubmit)
+  const onSubmit:SubmitHandler<MilkingData> = (data)=>{
+    // if (!data._id && selectedMilking?._id) {
+    //   data._id = selectedMilking._id;
+    // }
+    console.log("receiving from edit form (within onsubmit): ",data)
+    if(data._id){
+      console.log("updating data: ", data)
+      updateMilking(data._id, data)
+      onFormSubmit()
+
+    }else{
+      console.log("adding data (milking form): ", data)
+      addMilking(data)
+      onFormSubmit()
+    }
+    form.reset()
+    if (onFormSubmit) onFormSubmit()
+  }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form  onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {/* <FormField
+          control={form.control}
+          name="Begin Date"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Begin Date</FormLabel>
+              <FormControl>
+                <Input type='date' placeholder="Begin Date" {...field} value={field.value || ''} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="Begin Time"
@@ -63,11 +91,21 @@ const MilkingForm = ({ selectedMilking, onSubmit }: MilkingFormProps) => {
             <FormItem>
               <FormLabel>Begin Time</FormLabel>
               <FormControl>
-                <Input placeholder="Begin Time" {...field} />
+              <Input type='time' placeholder="Begin Time" {...field} value={field.value || ''} />
               </FormControl>
-              <FormDescription>
-                Enter the begin time.
-              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
+        <FormField
+          control={form.control}
+          name="_id"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ID</FormLabel>
+              <FormControl>
+                <Input placeholder="id" {...field} readOnly/>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -79,17 +117,146 @@ const MilkingForm = ({ selectedMilking, onSubmit }: MilkingFormProps) => {
             <FormItem>
               <FormLabel>Milking Number</FormLabel>
               <FormControl>
-                <Input placeholder="Milking Number" {...field} />
+                <Input placeholder="Milking Number" {...field} onChange={(e) => field.onChange(Number(e.target.value))}  />
               </FormControl>
-              <FormDescription>
-                Enter the milking number.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        {/* Add more fields here */}
-        <Button type="submit">Submit</Button>
+        <FormField
+          control={form.control}
+          name="Duration (mm:ss)"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Duration (mm:ss)</FormLabel>
+              <FormControl>
+                <Input placeholder="Duration (mm:ss)" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="Yield (kg)"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Yield (kg)</FormLabel>
+              <FormControl>
+                <Input placeholder="Yield (kg)" {...field} onChange={(e) => field.onChange(Number(e.target.value))}/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="OCC(*1000 cells/ml)"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>OCC(*1000 cells/ml)</FormLabel>
+              <FormControl>
+                <Input placeholder="OCC(*1000 cells/ml)" {...field} onChange={(e) => field.onChange(Number(e.target.value))}/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="Milking Interval (hh:mm)"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Milking Interval (hh:mm)</FormLabel>
+              <FormControl>
+                <Input placeholder="Milking Interval (hh:mm)" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="LF"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>LF</FormLabel>
+              <FormControl>
+                <Input placeholder="LF" {...field} onChange={(e) => field.onChange(Number(e.target.value))}/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="RF"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>RF</FormLabel>
+              <FormControl>
+                <Input placeholder="RF" {...field} onChange={(e) => field.onChange(Number(e.target.value))}/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="LR"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>LR</FormLabel>
+              <FormControl>
+                <Input placeholder="LR" {...field} onChange={(e) => field.onChange(Number(e.target.value))}/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="RR"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>RR</FormLabel>
+              <FormControl>
+                <Input placeholder="RR" {...field} onChange={(e) => field.onChange(Number(e.target.value))}/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="Udder"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Udder</FormLabel>
+              <FormControl>
+                <Input placeholder="Udder" {...field} onChange={(e) => field.onChange(Number(e.target.value))}/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="Milk Destination"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Milk Destination</FormLabel>
+              <FormControl>
+                <Input placeholder="Milk Destination" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <div className="md:col-span-2">
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   );

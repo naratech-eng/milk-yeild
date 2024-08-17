@@ -42,8 +42,7 @@ dbConnect();
 // });
 
 const milkingDataSchema = new mongoose.Schema({
-  // _id: mongoose.Schema.Types.ObjectId, 
-  "Begin Time": String,
+  // _id?: mongoose.Schema.Types.ObjectId, 
   "Milking Number": Number,
   "Duration (mm:ss)": String,
   "Yield (kg)": Number,
