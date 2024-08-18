@@ -9,7 +9,7 @@ const cors = require('cors');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.CLIENT_URI,
     optionsSuccessStatus: 200,
   }));
 
@@ -17,11 +17,11 @@ app.use(cors({
 
 const dbConnect = async () => {
     try {
-      await mongoose.connect('mongodb://localhost:27017/dairy', {
+      await mongoose.connect( process.env.MONGODB_URI , {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
-      console.log('MongoDB connected');
+      console.log('MongoDB connected', process.env.MONGODB_URI );
     } catch (error) {
       console.error('MongoDB connection error:', error);
       process.exit(1);
