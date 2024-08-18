@@ -4,10 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { formSchema } from './utils/FormSchema';
+import { formSchema } from '../utils/FormSchema';
 import { z } from 'zod';
 import { useMilking } from '@/context/MilkingContext';
-
 
 type MilkingData = z.infer<typeof formSchema>;
 
@@ -45,14 +44,10 @@ const MilkingForm: React.FC<MilkingFormProps> = ({ selectedMilking, onFormSubmit
     }
   }, [selectedMilking]);
   
-  
-  
   // console.log("receiving from edit form(outside onsubmit): ",selectedMilking)
 
   const onSubmit:SubmitHandler<MilkingData> = (data)=>{
-    // if (!data._id && selectedMilking?._id) {
-    //   data._id = selectedMilking._id;
-    // }
+ 
     console.log("receiving from edit form (within onsubmit): ",data)
     if(data._id){
       console.log("updating data: ", data)
@@ -104,7 +99,7 @@ const MilkingForm: React.FC<MilkingFormProps> = ({ selectedMilking, onFormSubmit
             <FormItem>
               <FormLabel>ID</FormLabel>
               <FormControl>
-                <Input placeholder="id" {...field} readOnly/>
+                <Input placeholder="Automaticaly Generated" {...field} readOnly/>
               </FormControl>
               <FormMessage />
             </FormItem>

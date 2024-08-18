@@ -1,7 +1,7 @@
 
 // import './App.css'
 import MilkingForm from './components/MilkingForm.old'
-import MilkingListing from './components/MilkingListing'
+import MilkingListing from './components/lists/MilkingListing'
 import { MilkingProvider } from './context/MilkingContext'
 
 const App : React.FC = ()=> {

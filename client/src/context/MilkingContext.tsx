@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { z } from 'zod';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { formSchema } from '@/components/utils/FormSchema';
 
 
@@ -34,7 +32,7 @@ export const MilkingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     // Fetch initial data if needed
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5001/api/milking');
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/milking` );
         const data: MilkingData[] = await response.json();
         console.log("milking data fetched: ", response)
         setMilkingData(data);
@@ -50,7 +48,7 @@ export const MilkingProvider: React.FC<{ children: React.ReactNode }> = ({ child
     // setMilkingData((prevData) => [...prevData, data]);
     try {
       // POST request to backend here
-      const response = await fetch('http://localhost:5001/api/milking', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/milking`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +59,7 @@ export const MilkingProvider: React.FC<{ children: React.ReactNode }> = ({ child
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const result = await response.json();
       console.log('Milking data added:', result);
       setMilkingData((prevData) => [...prevData, result]);
@@ -73,10 +71,8 @@ export const MilkingProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const updateMilking = async (id: string, updatedData: MilkingData) => {
     try {
-      
-  
       // Make a PATCH request to the backend to update the data
-      const response = await fetch(`http://localhost:5001/api/milking/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/milking/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +101,7 @@ export const MilkingProvider: React.FC<{ children: React.ReactNode }> = ({ child
       //update the local record by removing with the matching ID
       setMilkingData((prevData) => prevData.filter((milking) => milking._id !== id));
       // make a delete request to backend/database
-      const response = await fetch(`http://localhost:5001/api/milking/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/milking/${id}`, {
         method: 'DELETE',
       })
 

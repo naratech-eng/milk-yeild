@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import MilkingForm from './MilkingForm';
+import MilkingForm from '../forms/MilkingForm';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { z } from 'zod';
-import { formSchema } from './utils/FormSchema';
+import { formSchema } from '../utils/FormSchema';
 
 import { useMilking } from '@/context/MilkingContext';
 import { Delete } from 'lucide-react';
@@ -132,22 +132,22 @@ const MilkingListing : React.FC = () => {
             
       </div>
       <Table className="">
-        <TableHeader className='bg-gray-200 py-6 px-4 mx-auto h-4'>
-            <TableRow>
+        <TableHeader className='bg-gray-200 px-4 mx-auto'>
+            <TableRow className=''>
                 {/* <TableHead>Begin Date</TableHead>
                 <TableHead>Begin Time</TableHead> */}
-                <TableHead>Milking Number</TableHead>
-                <TableHead>Duration (mm:ss)</TableHead>
-                <TableHead>Yield (kg)</TableHead>
-                <TableHead>OCC (*1000 cells/ml)</TableHead>
-                <TableHead>Milking Interval (hh:mm)</TableHead>
-                <TableHead>LF</TableHead>
-                <TableHead>RF</TableHead>
-                <TableHead>LR</TableHead>
-                <TableHead>RR</TableHead>
-                <TableHead>Udder</TableHead>
-                <TableHead>Milk Destination</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead className=' py-4'>Milking Number</TableHead>
+                <TableHead className=' py-4'>Duration (mm:ss)</TableHead>
+                <TableHead className=' py-4'>Yield (kg)</TableHead>
+                <TableHead className=' py-4'>OCC (*1000 cells/ml)</TableHead>
+                <TableHead className=' py-4'>Milking Interval (hh:mm)</TableHead>
+                <TableHead className=' py-4'>LF</TableHead>
+                <TableHead className=' py-4'>RF</TableHead>
+                <TableHead className=' py-4'>LR</TableHead>
+                <TableHead className=' py-4'>RR</TableHead>
+                <TableHead className=' py-4'>Udder</TableHead>
+                <TableHead className=' py-4'>Milk Destination</TableHead>
+                <TableHead className=' py-4'>Actions</TableHead>
 
             </TableRow>
         </TableHeader>

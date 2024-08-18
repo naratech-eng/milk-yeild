@@ -1,6 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+
+const PORT = process.env.PORT
+
 const cors = require('cors');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -92,8 +96,8 @@ app.delete('/api/milking/:id', async (req, res) => {
 });
 
 // Start the server
-const port = 5001;
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
+// const port = 5001;
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
 
