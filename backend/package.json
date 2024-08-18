@@ -1,7 +1,9 @@
 {
-
+  "name": "milk-yield-backend",
+  "version": "1.0.0",
   "scripts": {
-
+    "start": "node server.js",
+    "build": "echo 'Build process for backend in JavaScript - No actual build step required for pure JS'",
     "dev": "nodemon server.js -w"
 
   },
