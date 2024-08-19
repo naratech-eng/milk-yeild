@@ -9,11 +9,11 @@ const cors = require('cors');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Log the CLIENT_URI environment variable
-console.log('Client URI:', process.env.CLIENT_URI);
-app.use(cors({
-    origin: process.env.CLIENT_URI,
-    optionsSuccessStatus: 200,
-  }));
+// console.log('Client URI:', process.env.CLIENT_URI);
+// app.use(cors({
+//     origin: process.env.CLIENT_URI,
+//     optionsSuccessStatus: 200,
+//   }));
 
 // Connect to MongoDB
 
