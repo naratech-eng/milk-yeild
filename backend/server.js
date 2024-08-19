@@ -99,12 +99,12 @@ app.post('/api/milking', async (req, res) => {
   // console.log('Request body:', newMilkingData);
   const milkingData = req.body;
 
-  console.log('Connecting to database:', process.env.MONGO_URI);
-  console.log('Inserting into collection:', Milking.collection.name);
+  console.log('Connecting to database:', process.env.MONGODB_URI);
+  console.log('Inserting into collection:', MilkingData.collection.name);
   console.log('Document to be inserted:', milkingData);
 
   try {
-    const result = await Milking.create(milkingData);
+    const result = await MilkingData.create(milkingData);
     res.status(201).json(result);
   } catch (error) {
     console.error('Error inserting document:', error);
