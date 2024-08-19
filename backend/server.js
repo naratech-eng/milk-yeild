@@ -24,6 +24,7 @@ const dbConnect = async () => {
         useUnifiedTopology: true,
       });
       console.log('MongoDB connected', process.env.MONGODB_URI );
+      
     } catch (error) {
       console.error('MongoDB connection error:', error);
       process.exit(1);
@@ -73,10 +74,23 @@ app.get('/api/milking', async (req, res) => {
 
 // Create an endpoint to create new milking data
 app.post('/api/milking', async (req, res) => {
-  const newMilkingData = new MilkingData(req.body);
-  await newMilkingData.save();
-  res.json(newMilkingData);
-  console.log('Request body:', newMilkingData);
+  // const newMilkingData = new MilkingData(req.body);
+  // await newMilkingData.save();
+  // res.json(newMilkingData);
+  // console.log('Request body:', newMilkingData);
+  const milkingData = req.body;
+
+  console.log('Connecting to database:', process.env.MONGO_URI);
+  console.log('Inserting into collection:', Milking.collection.name);
+  console.log('Document to be inserted:', milkingData);
+
+  try {
+    const result = await Milking.create(milkingData);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Error inserting document:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
 // Create an endpoint to edit existing milking data
