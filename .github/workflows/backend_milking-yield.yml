@@ -26,15 +26,20 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
+      
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build --if-present
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        working-directory: ./backend
+        run: zip backend-release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: node-app
-          path: release.zip
+          name: backend-app
+          path: ./backend/backend-release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,10 +52,10 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: node-app
+          name: backend-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip backend-release.zip
       
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
