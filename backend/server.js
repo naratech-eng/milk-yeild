@@ -83,7 +83,7 @@ const milkingDataSchema = new mongoose.Schema({
 });
 
 // Create a model for MilkingData
-const MilkingData = mongoose.model('MilkingData', milkingDataSchema, 'milkingdatas');
+const MilkingData = mongoose.model('MilkingData', milkingDataSchema);
 
 // Create an endpoint to get all milking data
 app.get('/api/milking', async (req, res) => {
