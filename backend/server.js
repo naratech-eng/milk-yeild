@@ -17,20 +17,39 @@ app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 
-const dbConnect = async () => {
-    try {
-      await mongoose.connect( process.env.MONGODB_URI , {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      console.log('MongoDB connected', process.env.MONGODB_URI );
+// Connection string 
+const connectionString =process.env.MONGODB_URI
+
+// Specify the database name you want to connect to
+const databaseName = 'milking-mern';  // Replace 'myDatabase' with the actual database name you want to use
+
+// Create the full connection string with the specified database
+const fullConnectionString = `${connectionString}${databaseName}`;
+
+// Connect to the MongoDB instance using Mongoose
+mongoose.connect(fullConnectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log(`Successfully connected to the ${databaseName} database`);
+}).catch((error) => {
+  console.error('Error connecting to the database', error);
+});
+
+// const dbConnect = async () => {
+//     try {
+//       await mongoose.connect( process.env.MONGODB_URI , {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true,
+//       });
+//       console.log('MongoDB connected', process.env.MONGODB_URI );
       
-    } catch (error) {
-      console.error('MongoDB connection error:', error);
-      process.exit(1);
-    }
-  };
-dbConnect();
+//     } catch (error) {
+//       console.error('MongoDB connection error:', error);
+//       process.exit(1);
+//     }
+//   };
+// dbConnect();
 
 // Define a schema for MilkingData
 // const milkingDataSchema = new mongoose.Schema({
@@ -64,7 +83,7 @@ const milkingDataSchema = new mongoose.Schema({
 });
 
 // Create a model for MilkingData
-const MilkingData = mongoose.model('MilkingData', milkingDataSchema);
+const MilkingData = mongoose.model('MilkingData', milkingDataSchema, 'milkingdatas');
 
 // Create an endpoint to get all milking data
 app.get('/api/milking', async (req, res) => {
