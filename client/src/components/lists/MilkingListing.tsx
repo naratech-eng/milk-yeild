@@ -1,11 +1,9 @@
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import MilkingForm from '../forms/MilkingForm';
 import { DialogDescription } from '@radix-ui/react-dialog';
-import { z } from 'zod';
-import { formSchema } from '../utils/FormSchema';
 
 import { useMilking } from '@/context/MilkingContext';
 import { Delete } from 'lucide-react';
@@ -39,8 +37,6 @@ import { Delete } from 'lucide-react';
 
 const MilkingListing : React.FC = () => {
     const {milkingData, deleteMilking} = useMilking();
-    const [selectedMilking, setSelectedMilking] = useState<z.infer<typeof formSchema> | null>(null);
-    const [fetchedMilkingData, setFetchedMilkingData] = useState<z.infer<typeof formSchema>[]>([]);
 
       // State to control the "ADD" dialog
     const [isAddDialogOpen, setIsAddDialogOpen] = useState<boolean>(false);
