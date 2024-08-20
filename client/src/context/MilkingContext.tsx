@@ -35,6 +35,7 @@ export const MilkingProvider: React.FC<{ children: React.ReactNode }> = ({ child
         const response = await fetch(`${import.meta.env.VITE_API_URL}/api/milking` );
         const data: MilkingData[] = await response.json();
         console.log("milking data fetched: ", response)
+        console.log("vite uri: ", response)
         setMilkingData(data);
       } catch (error) {
         console.error('Failed to fetch milking data:', error);
