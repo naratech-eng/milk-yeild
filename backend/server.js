@@ -87,15 +87,16 @@ const MilkingData = mongoose.model('MilkingData', milkingDataSchema);
 
 // Create an endpoint to get all milking data
 app.get('/api/milking', async (req, res) => {
-
   try {
-    console.log("get all data")
     const milkingData = await MilkingData.find();
+    console.log("Fetched all milking data...", milkingData);
     res.json(milkingData);
   } catch (error) {
-    console.error('Error inserting document:', error)
+    console.error('Error retrieving milking data:', error);
+    res.status(500).json({ message: 'Failed to fetch milking data. Please try again later.' });
   }
 });
+
 
 // Create an endpoint to create new milking data
 app.post('/api/milking', async (req, res) => {
@@ -138,7 +139,7 @@ app.delete('/api/milking/:id', async (req, res) => {
 
 // Start the server
 // const port = 5001;
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server started on port ${PORT}`);
+// });
 
