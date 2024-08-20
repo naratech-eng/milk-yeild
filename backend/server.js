@@ -87,8 +87,14 @@ const MilkingData = mongoose.model('MilkingData', milkingDataSchema);
 
 // Create an endpoint to get all milking data
 app.get('/api/milking', async (req, res) => {
-  const milkingData = await MilkingData.find();
-  res.json(milkingData);
+
+  try {
+    console.log("get all data")
+    const milkingData = await MilkingData.find();
+    res.json(milkingData);
+  } catch (error) {
+    console.error('Error inserting document:', error)
+  }
 });
 
 // Create an endpoint to create new milking data
