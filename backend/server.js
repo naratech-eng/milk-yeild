@@ -18,20 +18,14 @@ app.use(express.urlencoded({ extended: true }));
 // Connect to MongoDB
 
 // Connection string 
-const connectionString =process.env.MONGODB_URI
-
-// Specify the database name you want to connect to
-const databaseName = 'milking-mern';  // Replace 'myDatabase' with the actual database name you want to use
-
-// Create the full connection string with the specified database
-const fullConnectionString = `${connectionString}${databaseName}`;
+const connectionString =process.env.MONGODB_URI || process.env.MONGODB_URI_SECONDARY
 
 // Connect to the MongoDB instance using Mongoose
-mongoose.connect(fullConnectionString, {
+mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
-  console.log(`Successfully connected to the ${databaseName} database`);
+  console.log(`Successfully connected to the database`);
 }).catch((error) => {
   console.error('Error connecting to the database', error);
 });
@@ -89,7 +83,7 @@ const MilkingData = mongoose.model('MilkingData', milkingDataSchema);
 app.get('/api/milking', async (req, res) => {
   try {
     const milkingData = await MilkingData.find();
-    console.log("Fetched all milking data...", milkingData);
+    console.log("Fetched all milking data: ", milkingData);
     res.json(milkingData);
   } catch (error) {
     console.error('Error retrieving milking data:', error);
@@ -139,7 +133,7 @@ app.delete('/api/milking/:id', async (req, res) => {
 
 // Start the server
 // const port = 5001;
-// app.listen(PORT, () => {
-//   console.log(`Server started on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});
 
