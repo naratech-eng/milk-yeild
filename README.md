@@ -174,7 +174,9 @@ with:
 ## Summary
 With the backend and frontend fully integrated into a CI/CD pipeline, every change you make will be seamlessly deployed, allowing you to focus on enhancing your application. This setup not only streamlines your workflow but also gives you the freedom to explore new features, improve existing ones, and scale your app as needed.
 
-This is just the beginning—keep pushing the boundaries of your project and enjoy the process of building something great. Happy coding! 🚀
+This is just the beginning—keep pushing the boundaries of your project and enjoy the process of building something great.
+
+Happy coding!!! 🚀
 
 
 ## Links
