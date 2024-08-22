@@ -42,7 +42,7 @@ I have created 3 branches for easy deployment
     `client` - frontend code (Vite: React)
     `r-api` - R backend web API using `plumber` [documentation](https://www.rplumber.io/articles/routing-and-input.html#dynamic-routes)  
 ### Setup project locally or VM (Ex: Azure VM): 
-01. Install mongodb locally
+01. Install MongoDB locally
     - Follow the [documentation](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/#std-label-install-mdb-community-ubuntu) to install depending on your machine. 
     - [Download](https://www.mongodb.com/try/download/compass) & install `MongoDB compass GUI` 
     - Connect to your database
@@ -50,12 +50,12 @@ I have created 3 branches for easy deployment
 
 02. Setup backend in `Node` runtime environment.
     - ```git clone "https://github.com/naratech-eng/milk-yeild.git" ```
-    - make sure barnch is "backend" `git checkout backend`
+    - make sure branch is "backend" `git checkout backend`
     - `cd backend` & create `.env`
     - `npm install`
     - start server `npm run dev`
 
-***setup environment variables***
+***Setup environment variables***
 
 ```env
 PORT=5001
@@ -63,7 +63,7 @@ MONGODB_URI=
 CLIENT_URI=
 MONGODB_URI_SECONDARY=
 ```
-uncomment following code to resolve `CORS` erros 
+uncomment following code to resolve `CORS` errors 
 ```typescript
 app.use(cors({
     origin: process.env.CLIENT_URI,
@@ -75,7 +75,7 @@ Note: Use a postman or similar to test CRUD operations.
 Ex: `localhost:5001/api/milking`
 
 03. Setup frontend code for user interactions:
-    - `cd` into `client` folder
+    - `cd` into the `client` folder
     - `npm install`
     - create `.env.development`
     - add `VITE_API_URL='http://127.0.0.1:5001'`or `localhost:your_port`
@@ -92,7 +92,7 @@ Note: Deployed version on Azure app services: https://mango-ground-0ef454c0f.5.a
     - create `.env` file (You can use `renv` or `dotenv`)
     - connect to the same database as above 
     - run `Rscript backend.R`
-    - install packages like `install.packages("mongolite")` and other packages if it's not instlled directly with script.
+    - install packages like `install.packages("mongolite")` and other packages if it's not installed directly with script.
 
 **environment variables**
 ```env
@@ -134,7 +134,7 @@ You can use `github actions workflow` or `Azure Portal`
           - backend
       workflow_dispatch:
     ```
-    [Screenshot working directory](https://i.imgur.com/V9AUAf6.png)
+    ![Screenshot working directory](https://i.imgur.com/V9AUAf6.png)
     ```
     with:
         app-name: YourAppServiceName
