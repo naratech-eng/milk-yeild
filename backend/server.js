@@ -10,6 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Log the CLIENT_URI environment variable
 // console.log('Client URI:', process.env.CLIENT_URI);
+
+// uncomment this for local deployemnt 
 // app.use(cors({
 //     origin: process.env.CLIENT_URI,
 //     optionsSuccessStatus: 200,
@@ -35,21 +37,6 @@ mongoose.connect(fullConnectionString, {
 }).catch((error) => {
   console.error('Error connecting to the database', error);
 });
-
-// const dbConnect = async () => {
-//     try {
-//       await mongoose.connect( process.env.MONGODB_URI , {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//       });
-//       console.log('MongoDB connected', process.env.MONGODB_URI );
-      
-//     } catch (error) {
-//       console.error('MongoDB connection error:', error);
-//       process.exit(1);
-//     }
-//   };
-// dbConnect();
 
 // Define a schema for MilkingData
 // const milkingDataSchema = new mongoose.Schema({
@@ -100,10 +87,7 @@ app.get('/api/milking', async (req, res) => {
 
 // Create an endpoint to create new milking data
 app.post('/api/milking', async (req, res) => {
-  // const newMilkingData = new MilkingData(req.body);
-  // await newMilkingData.save();
-  // res.json(newMilkingData);
-  // console.log('Request body:', newMilkingData);
+
   const milkingData = req.body;
 
   console.log('Connecting to database:', process.env.MONGODB_URI);
