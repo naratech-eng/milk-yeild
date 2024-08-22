@@ -1,7 +1,7 @@
 
 <div align = "center">
 
-# Full Stack REST API with MERN, R Backend Integration and Azure Deployment :smiley:
+# Full Stack REST API with MERN: Replacing Node/Express with R Backend Integration and Azure Deployment :smiley:
 
 ![Node LTS](https://img.shields.io/node/v-lts/node-red?logo=nodedotjs&logoSize=auto) ![React 18.3.1](https://img.shields.io/badge/React-18.3.1-blue.svg?logo=react&) ![Express.js](https://img.shields.io/badge/Express.js-404D59.svg?logo=express&) ![Static Badge](https://img.shields.io/badge/MongoDB-darkgreen?logo=mongodb&logoSize=auto) <br/>
 ![Static Badge](https://img.shields.io/badge/TypeScript-blue?logo=typescript&logoColor=black) ![Static Badge](https://img.shields.io/badge/Tailwind_CSS-blue?logo=tailwindcss&logoSize=auto) ![Static Badge](https://img.shields.io/badge/ShadCN%2FUI-black?logo=shadcnui&logoSize=auto) <br/>
@@ -32,7 +32,7 @@ Dataset Source: I used [Borealis Milk Yield Data](https://borealisdata.ca/datase
 
 :white_check_mark: **Responsive Design:** Enjoy a seamless user experience across various devices and screen sizes. (This is not to showcase fancy UI)
 
-:white_check_mark: **Dual Backend Connectivity:** Connect to two backends, Express.js and R with `plumber`.
+:white_check_mark: **Dual Backend Connectivity:** Connect to two backends, Express.js or R with `plumber`.
 
 :white_check_mark: **Azure App Services Deployment:** Deploy the MERN stack application on Azure App Services for scalable and secure hosting.
 
